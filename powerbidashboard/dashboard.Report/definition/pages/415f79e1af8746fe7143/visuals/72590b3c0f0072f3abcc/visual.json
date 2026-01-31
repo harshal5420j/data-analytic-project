@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "72590b3c0f0072f3abcc",
+  "position": {
+    "x": 0,
+    "y": 266.20738061172148,
+    "z": 2000,
+    "height": 454.04529870690817,
+    "width": 455.28925842939287,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "treemap",
+    "query": {
+      "queryState": {
+        "Group": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Clean_sales_data"
+                    }
+                  },
+                  "Property": "Product Category"
+                }
+              },
+              "queryRef": "Clean_sales_data.Product Category",
+              "nativeQueryRef": "Product Category",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Clean_sales_data"
+                        }
+                      },
+                      "Property": "Sales"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Clean_sales_data.Sales)",
+              "nativeQueryRef": "Sum of Sales"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

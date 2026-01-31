@@ -1,0 +1,100 @@
+table Clean_sales_data
+	lineageTag: 88715e16-6a62-4051-9522-e335e0f73099
+
+	column 'Transaction ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: e37dc0e1-43d1-41d3-85bf-48bbe32da356
+		summarizeBy: count
+		sourceColumn: Transaction ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 405df73a-df4b-40bd-8812-fccf0b776239
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 185d065f-f00a-4ae1-9800-46f70df4b78e
+			defaultHierarchy: LocalDateTable_b7f34d2b-c69b-42f3-b02e-9a7f0dee1971.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Customer ID'
+		dataType: string
+		lineageTag: d07957f6-9967-4f12-a847-99a9b111b329
+		summarizeBy: none
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: bfc851be-b798-4e85-b8fb-21436b5d6b13
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: e080e069-da77-4f30-aabf-1c084351bc3d
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Category'
+		dataType: string
+		lineageTag: 97e2b7d4-08f4-4c0b-95ee-f47856b38e07
+		summarizeBy: none
+		sourceColumn: Product Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c667998-3fb7-4fba-8463-08bfc1c9d623
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price per Unit'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b975540-9cb6-4939-a036-3decc7f20cbf
+		summarizeBy: sum
+		sourceColumn: Price per Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: int64
+		formatString: 0
+		lineageTag: f29481ad-00a4-4046-8c45-1d21e9e03c26
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Clean_sales_data = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\EpicQuester\Documents\Projecct\Clean_sales_data.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Transaction ID", Int64.Type}, {"Date", type date}, {"Customer ID", type text}, {"Gender", type text}, {"Age", Int64.Type}, {"Product Category", type text}, {"Quantity", Int64.Type}, {"Price per Unit", Int64.Type}, {"Sales", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
